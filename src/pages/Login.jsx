@@ -1,14 +1,21 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
         formState: { errors },
         reset,
         setValue
-    } = useForm();
+    } = useForm({
+        defaultValues: {
+            username: 'dhruvil',
+            password: 12345
+        }
+    });
 
     const onSubmit = (data) => {
         if (!data.username || !data.password) {
@@ -18,6 +25,7 @@ const Login = () => {
             if (data.username.trim() == 'dhruvil' && data.password == "12345") {
                 console.log("authenticated");
                 reset();
+                navigate("/");
             } else {
                 setValue('password', '');
             }
