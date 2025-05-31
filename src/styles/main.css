@@ -3,3 +3,44 @@
 body {
     font-family: "Poppins", sans-serif;
 }
+
+:root {
+    --primary: rgb(0, 80, 116);
+}
+
+.header {
+    font-weight: bold;
+    font-size: 2rem;
+    color: var(--primary);
+}
+
+input {
+    width: 100%;
+    padding: 0.25rem 0.5rem;
+    margin-top: 1rem;
+    border-bottom: 0.1rem solid black;
+}
+
+input:active,
+input:focus,
+input:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.btn {
+    padding: 0.25rem 0.75rem;
+    border: 1px solid var(--primary);
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.btn-primary {
+    color: var(--primary);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: var(--primary);
+    color: white;
+}
