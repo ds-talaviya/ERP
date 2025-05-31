@@ -1,54 +1,63 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useForm } from 'react-hook-form';
 
 const Login = () => {
-    const [userLoginData, setUserLoginData] = useState({ username: 'dhruvil', password: '' });
-    const [loginErr, setLoginErr] = useState(false);
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+        setValue
+    } = useForm();
 
-    const onsubmit = (e) => {
-        e.preventDefault(); // Prevents page reload
-        if (!userLoginData.username || !userLoginData.password) {
+    const onSubmit = (data) => {
+        if (!data.username || !data.password) {
             alert("Please fill in both fields");
             return;
         } else {
-            if (userLoginData.username.trim() == 'dhruvil' && userLoginData.password == "12345") {
+            if (data.username.trim() == 'dhruvil' && data.password == "12345") {
                 console.log("authenticated");
-                setLoginErr(false);
+                reset();
             } else {
-                setUserLoginData({ username: userLoginData.username, password: '' })
-                setLoginErr(true);
+                setValue('password', '');
             }
         }
     }
-
-    const handleInput = (e) => {
-        const { name, value } = e.target;
-        setUserLoginData({
-            ...userLoginData,
-            [name]: value
-        });
-    };
 
     return (
         <>
             <div className="flex justify-center items-center h-screen">
                 <div className="bg-gray-50 px-6 py-10 rounded shadow w-125">
                     <h1 className='header text-center'>Login</h1>
-                    <form onSubmit={onsubmit}>
-                        <input
-                            type="text"
-                            name="username"
-                            id="username"
-                            value={userLoginData.username}
-                            onChange={handleInput}
-                            placeholder="Enter Username" />
-                        <input
-                            type="password"
-                            name="password"
-                            id="password"
-                            value={userLoginData.password}
-                            onChange={handleInput}
-                            placeholder="Enter Password" />
-
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <div className="mb-4">
+                            <input
+                                type="text"
+                                name="username"
+                                id="username"
+                                {...register("username", { required: "Username is required" })}
+                                placeholder="Enter Username" />
+                            {errors.username && (
+                                <p className="text-red-500 text-sm">{errors.username.message}</p>
+                            )}
+                        </div>
+                        <div className="mb-4">
+                            <input
+                                type="password"
+                                name="password"
+                                id="password"
+                                {...register("password", {
+                                    required: "Password is required",
+                                    minLength: {
+                                        value: 5,
+                                        message: "Password must be at least 5 characters"
+                                    }
+                                })}
+                                placeholder="Enter Password" />
+                            {errors.password && (
+                                <p className="text-red-500 text-sm">{errors.password.message}</p>
+                            )}
+                        </div>
                         <div className="flex justify-center mt-5">
                             <button
                                 className='btn btn-primary w-50'
@@ -56,10 +65,6 @@ const Login = () => {
                                 Login
                             </button>
                         </div>
-
-                        {loginErr && (
-                            <p className='text-red-700 mt-2 text-center'> Enter valid Username and Password !! </p>
-                        )}
                     </form>
                 </div>
             </div>
