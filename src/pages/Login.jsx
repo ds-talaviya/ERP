@@ -1,6 +1,6 @@
-import React from 'react'
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { userLoggedIn } from '../auth/auth';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -25,6 +25,7 @@ const Login = () => {
             if (data.username.trim() == 'dhruvil' && data.password == "12345") {
                 console.log("authenticated");
                 reset();
+                userLoggedIn();
                 navigate("/");
             } else {
                 setValue('password', '');

@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
+import PrivateRoutes from './PrivateRoutes';
 
 const Login = lazy(() => import('../pages/Login'));
 const Layout = lazy(() => import('../components/Layout'));
@@ -25,9 +26,9 @@ const AppRoutes = createBrowserRouter([
             {
                 path: '/',
                 element: (
-                    <>
+                    <PrivateRoutes>
                         <Calendar />
-                    </>
+                    </PrivateRoutes>
                 )
             }
         ]
